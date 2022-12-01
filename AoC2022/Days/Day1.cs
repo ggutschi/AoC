@@ -2,13 +2,15 @@
 
 internal class Day1 : IDay
 {
+    private string? _input;
+
     public int Number => 1;
 
-    public async Task<string> CalculatePartOne(string inputFileName = IDay.DefaultInputFilename)
+    public async Task<string> CalculatePartOne()
     {
-        var input = await File.ReadAllTextAsync(inputFileName);
+        await ReadInput();
 
-        var maxCalories = input
+        var maxCalories = _input
             .Split(Environment.NewLine + Environment.NewLine)
             .Max(caloriesPerElf => caloriesPerElf
                 .Split(Environment.NewLine)
@@ -17,11 +19,11 @@ internal class Day1 : IDay
         return maxCalories.ToString();
     }
 
-    public async Task<string> CalculatePartTwo(string inputFileName = IDay.DefaultInputFilename)
+    public async Task<string> CalculatePartTwo()
     {
-        var input = await File.ReadAllTextAsync(inputFileName);
+        await ReadInput();
 
-        var sumTop3Calories = input
+        var sumTop3Calories = _input
             .Split(Environment.NewLine + Environment.NewLine)
             .Select(caloriesPerElf => caloriesPerElf
                 .Split(Environment.NewLine)
@@ -31,5 +33,10 @@ internal class Day1 : IDay
             .Sum();
 
         return sumTop3Calories.ToString();
+    }
+
+    private async Task ReadInput()
+    {
+        _input ??= await File.ReadAllTextAsync(IDay.DefaultInputFilename);
     }
 }

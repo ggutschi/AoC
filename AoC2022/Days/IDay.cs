@@ -6,6 +6,6 @@ public interface IDay
 
     int Number { get; }
 
-    Task<string> CalculatePartOne(string inputFilename = DefaultInputFilename);
-    Task<string> CalculatePartTwo(string inputFilename = DefaultInputFilename);
+    Task<string> CalculatePartOne();
+    Task<string> CalculatePartTwo();
 }
