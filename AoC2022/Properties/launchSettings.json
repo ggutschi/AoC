@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AoC2022": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

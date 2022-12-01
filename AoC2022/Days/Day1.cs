@@ -1,19 +1,36 @@
-﻿namespace AoC2022.Days;
+﻿using AoC2022.Services;
+using Microsoft.Extensions.Configuration;
+
+namespace AoC2022.Days;
 
 internal class Day1 : IDay
 {
+    private readonly IConfiguration configuration;
+    private readonly IAoCWebService aocWebService;
+
     private string? _input;
+    private string _newLine = Environment.NewLine;
+
+    public Day1(
+        IConfiguration configuration,
+        IAoCWebService aocWebService)
+    {
+        this.configuration = configuration;
+        this.aocWebService = aocWebService;
+
+        _newLine = configuration["NewLine"];
+    }
 
     public int Number => 1;
 
     public async Task<string> CalculatePartOne()
     {
-        await ReadInput();
+        await AssertInputLoaded();
 
         var maxCalories = _input
-            .Split(Environment.NewLine + Environment.NewLine)
+            .Split(_newLine + _newLine)
             .Max(caloriesPerElf => caloriesPerElf
-                .Split(Environment.NewLine)
+                .Split(_newLine)
                 .Sum(caloriesPerFood => int.Parse(caloriesPerFood)));
 
         return maxCalories.ToString();
@@ -21,12 +38,12 @@ internal class Day1 : IDay
 
     public async Task<string> CalculatePartTwo()
     {
-        await ReadInput();
+        await AssertInputLoaded();
 
         var sumTop3Calories = _input
-            .Split(Environment.NewLine + Environment.NewLine)
+            .Split(_newLine + _newLine)
             .Select(caloriesPerElf => caloriesPerElf
-                .Split(Environment.NewLine)
+                .Split(_newLine)
                 .Sum(caloriesPerFood => int.Parse(caloriesPerFood)))
             .OrderByDescending(x => x)
             .Take(3)
@@ -35,8 +52,9 @@ internal class Day1 : IDay
         return sumTop3Calories.ToString();
     }
 
-    private async Task ReadInput()
+    private async Task AssertInputLoaded()
     {
-        _input ??= await File.ReadAllTextAsync(IDay.DefaultInputFilename);
+        _input ??= (await aocWebService.GetInputAsync("/2022/day/1/input"))
+            .Trim(_newLine.ToCharArray());
     }
 }
