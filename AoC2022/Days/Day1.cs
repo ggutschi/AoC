@@ -8,8 +8,9 @@ internal class Day1 : IDay
     private readonly IConfiguration configuration;
     private readonly IAoCWebService aocWebService;
 
+    private readonly string NewLine = Environment.NewLine;
+
     private string? _input;
-    private string _newLine = Environment.NewLine;
 
     public Day1(
         IConfiguration configuration,
@@ -18,7 +19,7 @@ internal class Day1 : IDay
         this.configuration = configuration;
         this.aocWebService = aocWebService;
 
-        _newLine = configuration["NewLine"];
+        NewLine = configuration["NewLine"];
     }
 
     public int Number => 1;
@@ -28,9 +29,9 @@ internal class Day1 : IDay
         await AssertInputLoaded();
 
         var maxCalories = _input
-            .Split(_newLine + _newLine)
+            .Split(NewLine + NewLine)
             .Max(caloriesPerElf => caloriesPerElf
-                .Split(_newLine)
+                .Split(NewLine)
                 .Sum(caloriesPerFood => int.Parse(caloriesPerFood)));
 
         return maxCalories.ToString();
@@ -41,9 +42,9 @@ internal class Day1 : IDay
         await AssertInputLoaded();
 
         var sumTop3Calories = _input
-            .Split(_newLine + _newLine)
+            .Split(NewLine + NewLine)
             .Select(caloriesPerElf => caloriesPerElf
-                .Split(_newLine)
+                .Split(NewLine)
                 .Sum(caloriesPerFood => int.Parse(caloriesPerFood)))
             .OrderByDescending(x => x)
             .Take(3)
@@ -55,6 +56,6 @@ internal class Day1 : IDay
     private async Task AssertInputLoaded()
     {
         _input ??= (await aocWebService.GetInputAsync("/2022/day/1/input"))
-            .Trim(_newLine.ToCharArray());
+            .Trim(NewLine.ToCharArray());
     }
 }
