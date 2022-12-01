@@ -10,8 +10,6 @@ abstract class DayBase : IDay
 
     protected readonly string NewLine = Environment.NewLine;
 
-    protected string? _input;
-
     public DayBase(
         IConfiguration configuration,
         IAoCWebService aocWebService)
@@ -24,12 +22,23 @@ abstract class DayBase : IDay
 
     public abstract int Number { get; }
 
+    private string _input;
+    public async Task<string> GetInputAsync()
+    {
+        if (_input == null)
+        {
+            _input = await LoadInput();
+        }
+
+        return _input;
+    }
+
     public abstract Task<string> CalculatePartOne();
     public abstract Task<string> CalculatePartTwo();
 
-    protected async Task AssertInputLoaded()
+    protected async Task<string> LoadInput()
     {
-        _input ??= (await aocWebService.GetInputAsync($"/2022/day/{Number}/input"))
+        return (await aocWebService.GetInputAsync($"/2022/day/{Number}/input"))
             .Trim(NewLine.ToCharArray());
     }
 }

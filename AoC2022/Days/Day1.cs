@@ -11,9 +11,7 @@ internal class Day1 : DayBase
 
     public override async Task<string> CalculatePartOne()
     {
-        await AssertInputLoaded();
-
-        var maxCalories = _input
+        var maxCalories = (await GetInputAsync())
             .Split(NewLine + NewLine)
             .Max(caloriesPerElf => caloriesPerElf
                 .Split(NewLine)
@@ -24,9 +22,7 @@ internal class Day1 : DayBase
 
     public override async Task<string> CalculatePartTwo()
     {
-        await AssertInputLoaded();
-
-        var sumTop3Calories = _input
+        var sumTop3Calories = (await GetInputAsync())
             .Split(NewLine + NewLine)
             .Select(caloriesPerElf => caloriesPerElf
                 .Split(NewLine)
