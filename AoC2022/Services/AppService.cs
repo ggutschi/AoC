@@ -1,4 +1,5 @@
 ﻿using AoC2022.Days;
+using AoC2022.Utils.Helper;
 using Microsoft.Extensions.DependencyInjection;
 using Pastel;
 using System.Drawing;
@@ -17,13 +18,7 @@ public class AppService : IAppService
         days = GetAllImplementedDays();
     }
 
-    private IList<IDay> GetAllImplementedDays() => AppDomain.CurrentDomain.GetAssemblies()
-        .SelectMany(a => a.GetTypes())
-        .Where(t => typeof(IDay).IsAssignableFrom(t) &&
-                    !t.IsAbstract &&
-                    !t.IsInterface)
-        .Select(o => (IDay)ActivatorUtilities.CreateInstance(serviceProvider, o))
-        .ToList();
+    private IList<IDay> GetAllImplementedDays() => ReflectionHelper.GetImplementingClasses(serviceProvider, typeof(IDay));
 
     public async Task RunAsync()
     {
