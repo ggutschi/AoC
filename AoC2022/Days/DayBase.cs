@@ -25,13 +25,12 @@ abstract class DayBase : IDay
     private string _input;
     public async Task<string> GetInputAsync()
     {
-        if (_input == null)
-        {
-            _input = await LoadInput();
-        }
+        _input ??= await LoadInput();
 
         return _input;
     }
+
+    public async Task<(string, string)> CalculateAllParts() => (await CalculatePartOne(), await CalculatePartTwo());
 
     public abstract Task<string> CalculatePartOne();
     public abstract Task<string> CalculatePartTwo();

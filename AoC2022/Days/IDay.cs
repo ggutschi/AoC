@@ -2,9 +2,9 @@
 
 public interface IDay
 {
-    public const string DefaultInputFilename = "input.txt";
-
     int Number { get; }
+
+    Task<(string answerPartOne, string answerPartTwo)> CalculateAllParts();
 
     Task<string> CalculatePartOne();
     Task<string> CalculatePartTwo();
