@@ -3,28 +3,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace AoC2022.Days;
 
-internal class Day1 : IDay
+internal class Day1 : DayBase
 {
-    private readonly IConfiguration configuration;
-    private readonly IAoCWebService aocWebService;
+    public Day1(IConfiguration configuration, IAoCWebService aocWebService) : base(configuration, aocWebService) { }
 
-    private readonly string NewLine = Environment.NewLine;
+    public override int Number => 1;
 
-    private string? _input;
-
-    public Day1(
-        IConfiguration configuration,
-        IAoCWebService aocWebService)
-    {
-        this.configuration = configuration;
-        this.aocWebService = aocWebService;
-
-        NewLine = configuration["NewLine"];
-    }
-
-    public int Number => 1;
-
-    public async Task<string> CalculatePartOne()
+    public override async Task<string> CalculatePartOne()
     {
         await AssertInputLoaded();
 
@@ -37,7 +22,7 @@ internal class Day1 : IDay
         return maxCalories.ToString();
     }
 
-    public async Task<string> CalculatePartTwo()
+    public override async Task<string> CalculatePartTwo()
     {
         await AssertInputLoaded();
 
@@ -51,11 +36,5 @@ internal class Day1 : IDay
             .Sum();
 
         return sumTop3Calories.ToString();
-    }
-
-    private async Task AssertInputLoaded()
-    {
-        _input ??= (await aocWebService.GetInputAsync("/2022/day/1/input"))
-            .Trim(NewLine.ToCharArray());
     }
 }
