@@ -16,6 +16,10 @@ public class Day2Tests
     private const char MyPaper = 'Y';           // 1
     private const char MyScissors = 'Z';        // 2
 
+    private const char CharLose = 'X';
+    private const char CharDraw = 'Y';
+    private const char CharWin = 'Z';
+
     [Theory]
     [InlineData(MyRock, OpponentRock, PointsDraw)]
     [InlineData(MyRock, OpponentPaper, PointsLose)]
@@ -24,9 +28,30 @@ public class Day2Tests
     [InlineData(MyPaper, OpponentRock, PointsWin)]
     [InlineData(MyPaper, OpponentPaper, PointsDraw)]
     [InlineData(MyPaper, OpponentScissors, PointsLose)]
+
+    [InlineData(MyScissors, OpponentRock, PointsLose)]
+    [InlineData(MyScissors, OpponentPaper, PointsWin)]
+    [InlineData(MyScissors, OpponentScissors, PointsDraw)]
     public void GetRoundPointsTest(char myHand, char opponentsHand, int points)
     {
         Assert.Equal(points, Day2.GetRoundPoints(myHand, opponentsHand));
+    }
+
+    [Theory]
+    [InlineData(OpponentRock, CharLose, MyScissors)]
+    [InlineData(OpponentRock, CharDraw, MyRock)]
+    [InlineData(OpponentRock, CharWin, MyPaper)]
+
+    [InlineData(OpponentPaper, CharLose, MyRock)]
+    [InlineData(OpponentPaper, CharDraw, MyPaper)]
+    [InlineData(OpponentPaper, CharWin, MyScissors)]
+
+    [InlineData(OpponentScissors, CharLose, MyPaper)]
+    [InlineData(OpponentScissors, CharDraw, MyScissors)]
+    [InlineData(OpponentScissors, CharWin, MyRock)]
+    public void GetMineTest(char opponentsHand, char output, char myHand)
+    {
+        Assert.Equal(myHand, Day2.GetMine(opponentsHand, output));
     }
 
     [Fact]
