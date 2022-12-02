@@ -1,6 +1,5 @@
 ﻿using AoC2022.Services;
 using Microsoft.Extensions.Configuration;
-using System.ComponentModel;
 
 namespace AoC2022.Days;
 
