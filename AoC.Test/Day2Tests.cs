@@ -17,9 +17,13 @@ public class Day2Tests
     private const char MyScissors = 'Z';        // 2
 
     [Theory]
-    [InlineData(MyRock, OpponentPaper, PointsLose)]
     [InlineData(MyRock, OpponentRock, PointsDraw)]
+    [InlineData(MyRock, OpponentPaper, PointsLose)]
     [InlineData(MyRock, OpponentScissors, PointsWin)]
+
+    [InlineData(MyPaper, OpponentRock, PointsWin)]
+    [InlineData(MyPaper, OpponentPaper, PointsDraw)]
+    [InlineData(MyPaper, OpponentScissors, PointsLose)]
     public void GetRoundPointsTest(char myHand, char opponentsHand, int points)
     {
         Assert.Equal(points, Day2.GetRoundPoints(myHand, opponentsHand));

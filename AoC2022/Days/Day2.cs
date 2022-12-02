@@ -9,14 +9,11 @@ public class Day2 : DayBase
 
     public override int Number => 2;
 
-    private static readonly int[,] WinMatrix = new[,]
-    {
-        { 1, 0, 2 },
-        { 2, 1, 0 },
-        { 0, 2, 1 }
-    };
-
-    public static int GetRoundPoints(char handMine, char handOpponent) => WinMatrix[handMine - 'X', handOpponent - 'A'] * 3;
+    // +1 for column shift
+    // + 3 to not get negative
+    // % 3 to normalize
+    // * 3 for point multiplication
+    public static int GetRoundPoints(char handMine, char handOpponent) => ((handMine - 'X') + 1 - (handOpponent - 'A') + 3) % 3 * 3;
 
     public static int GetHandPoints(char hand) => (hand - 'X') + 1;
 
