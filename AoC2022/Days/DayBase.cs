@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace AoC2022.Days;
 
-abstract class DayBase : IDay
+public abstract class DayBase : IDay
 {
     protected readonly IConfiguration configuration;
     protected readonly IAoCWebService aocWebService;

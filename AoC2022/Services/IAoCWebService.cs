@@ -1,6 +1,6 @@
 ﻿namespace AoC2022.Services;
 
-internal interface IAoCWebService
+public interface IAoCWebService
 {
     Task<string> GetInputAsync(string relativePath);
 }
